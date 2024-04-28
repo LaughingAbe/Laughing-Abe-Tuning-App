@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>ZIM - Code Creativity</title>
+
+<!-- zimjs.com - JavaScript Canvas Framework -->
+<script type="module">
+
+import zim from "https://zimjs.org/cdn/016/zim";
+
+// See Docs under Frame for FIT, FILL, FULL, and TAG
+new Frame(FIT, 1024, 768, light, dark, ready);
+let stage = new Stage(); // Create a new instance of the Stage class
+zog("new Stage creted");
+
+let rings = [];
+let holes = [];
+let Rout = 50;
+let Rin = 25;
+let stringColors = [blue, red, yellow, purple];
+let stringLetters = ['G','C','E','A'];
+
+
+
+function ready() {
+
+    let buttonNumber = 1
+    let radiusOuter = 50;
+    let diameterOuter = 2*radiusOuter;
+    let radiusInner = 25;
+    let ringColor = stringColors[buttonNumber-1];
+    let centerColor = white;
+    let ringThickness = radiusOuter - radiusInner;
+    let posX = 1024/2-(diameterOuter-radiusInner);
+    let posY = 500;
+    let sound = "C-[AudioTrimmer.com].wav";
+    let sounds = ["G-[AudioTrimmer.com].wav", "C-[AudioTrimmer.com].wav", "E-[AudioTrimmer.com].wav", "A-[AudioTrimmer.com].wav"]
+
+    function ringbutton(radiusOuter, ringColor, centerColor, posX, posY, sound){
+        //play the sound when the outer ring is pressed
+        rings.push( 
+            new Circle(radiusOuter,ringColor).pos(posX, posY).tap((event)=>{
+                var audio = new Audio(sound);
+                audio.play();
+            })
+        );
+
+        //play the sound when the inner ring is pressed or leave out if it is an open string
+        holes.push(
+            new Circle(radiusInner,centerColor).pos(posX+ringThickness, posY+ringThickness).tap((event)=>{
+                var audio = new Audio(sound);
+                audio.play();
+            })
+        );
+    }
+
+    new Rectangle(2*diameterOuter, 5*diameterOuter, white).loc(posX-radiusOuter, posY-4*diameterOuter+radiusOuter).tap((event)=>{
+        var audio = new Audio("A minor-[AudioTrimmer.com].wav");
+        audio.play();
+    });
+
+    for(let i = 0; i < 4; i++){
+        ringbutton(radiusOuter, stringColors[i], centerColor, posX, posY-i*100, sounds[i]);
+    };
+    
+    
+
+
+    
+    // given F (Frame), S (Stage), W (width), H (height)
+    // put code here
+    
+    // Create a container for UI elements
+    let uiContainer = new Container();
+    zog("ui container created");
+
+
+
+    // new Button(200,50,"G-string").pos(500, 300).tap(()=>{
+    //     zog("clicking");
+    // });
+
+    // // Create labels for tuning results
+    // let tuningStatusLabel = new Label("Tuning Status: Ready")
+    //     .centerReg(uiContainer)
+    //     .pos(null, 200)
+    //     .alp(0.7); // Set alpha to make it semi-transparent
+    
+    // let currentNoteLabel = new Label("Current Note: ")
+    //     .centerReg(uiContainer)
+    //     .pos(null, 240)
+    //     .alp(0.7);
+
+    // // Create sliders for volume and pitch adjustment
+    // let volumeSlider = new Slider(200, 20, "Volume")
+    //     .centerReg(uiContainer)
+    //     .pos(null, 320);
+
+    // let pitchSlider = new Slider(200, 20, "Pitch")
+    //     .centerReg(uiContainer)
+    //     .pos(null, 380);
+    
+    // // Set up event handlers for buttons and sliders
+    // standardTuningButton.on("click", () => {
+    //     // Logic to trigger standard tuning
+    //     tuningStatusLabel.text = "Standard Tuning Selected";
+    // });
+
+    // alternateTuningButton.on("click", () => {
+    //     // Logic to trigger alternate tuning
+    //     tuningStatusLabel.text = "Alternate Tuning Selected";
+    // });
+
+    // // Update label text based on slider values
+    // volumeSlider.on("change", () => {
+    //     volumeLabel.text = "Volume: " + volumeSlider.currentValue;
+    // });
+
+    // pitchSlider.on("change", () => {
+    //     pitchLabel.text = "Pitch: " + pitchSlider.currentValue;
+    //});
+} // end ready
+
+</script>
+<meta name="viewport" content="width=device-width, user-scalable=no" />
+</head>
+<body></body>
+</html>
